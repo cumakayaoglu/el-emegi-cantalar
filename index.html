@@ -29,9 +29,24 @@
         }
     </script>
     <style>
-        .slide { display: none; width: 100%; height: 100%; object-fit: contain; }
-        .slide.active { display: block; animation: fadeEffect 0.5s; }
+        .slide { 
+            display: none; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            /* Zoom animasyonu için geçiş süresi eklendi */
+            transition: transform 0.5s ease-in-out; 
+        }
+        .slide.active { 
+            display: block; 
+            animation: fadeEffect 0.5s; 
+        }
         @keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
+        
+        /* Resmin üzerine gelince %15 yakınlaştır (Zoom Efekti) */
+        .slider-container:hover .slide.active {
+            transform: scale(1.15);
+        }
     </style>
 </head>
 <body class="bg-brand-light text-brand-dark antialiased">
@@ -40,44 +55,44 @@
     <nav class="bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <!-- Gerçek bir logo eklendiğinde buradaki SVG değiştirilebilir -->
-                    <svg class="w-8 h-8 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    <span class="font-serif text-2xl font-bold tracking-wider uppercase">Lumière</span>
+                <div class="flex-shrink-0 flex items-center gap-2 sm:gap-3">
+                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider uppercase">Lumière</span>
                 </div>
-                <div class="hidden sm:flex sm:space-x-8">
-                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">Koleksiyon</a>
-                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">Hakkımızda</a>
+                <!-- Mobil gizlenme kaldırıldı, telefonda da görülecek şekilde ayarlandı -->
+                <div class="flex space-x-4 sm:space-x-8">
+                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-xs sm:text-sm font-medium transition-colors">Koleksiyon</a>
+                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-xs sm:text-sm font-medium transition-colors">Hakkımızda</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Karşılama (Hero) Alanı -->
-    <div class="bg-brand-dark text-white py-20 px-6 text-center">
-        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 font-semibold">Zamansız Zarafet.</h1>
-        <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto text-lg md:text-xl">Her bir ilmeğinde özen barındıran, anne elinden çıkan özel tasarım çantalarla tarzınızı tamamlayın.</p>
+    <div class="bg-brand-dark text-white py-16 sm:py-20 px-4 sm:px-6 text-center">
+        <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 font-semibold">Zamansız Zarafet.</h1>
+        <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl">Her bir ilmeğinde özen barındıran, anne elinden çıkan özel tasarım çantalarla tarzınızı tamamlayın.</p>
     </div>
 
     <!-- Ürün Grid Alanı -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
             
             <!-- Ürün 1 -->
             <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
-                    <!-- object-contain ile fotoğraflar artık kırpılmayacak, kutuya tam sığacak -->
-                    <img src="hasir11.jpg" alt="Siyah Çanta Ön" class="slide active p-4">
-                    <img src="hasir12.jpg" alt="Siyah Çanta Ön" class="slide  p-4">
+                <!-- overflow-hidden eklendi: Zoom yaparken resim kutudan taşmasın diye -->
+                <div class="relative bg-gray-50 aspect-square slider-container overflow-hidden" data-current="0">
+                    <img src="hasir11.jpg" alt="Bej Çanta Ön" class="slide active p-4">
+                    <img src="hasir12.jpg" alt="Bej Çanta Detay" class="slide p-4">
                     
-                    <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
-                    <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
+                    <button class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
+                    <button class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
                 </div>
-                <div class="p-8 text-center">
+                <div class="p-6 sm:p-8 text-center">
                     <span class="text-xs font-semibold tracking-widest text-brand-accent uppercase mb-2 block">Yeni Sezon</span>
-                    <h2 class="font-serif text-2xl mb-3">Klasik Dokuma Bej</h2>
+                    <h2 class="font-serif text-xl sm:text-2xl mb-3">Klasik Dokuma Bej</h2>
                     <p class="text-gray-500 font-light text-sm mb-6 leading-relaxed">%100 organik pamuk ipten elde üretilmiştir. Günlük stilinizi tamamlayacak zarif ve dayanıklı bir parça.</p>
-                    <a href="https://wa.me/905072368337?text=Merhaba,%20Klasik%20Dokuma%20Bej%20canta%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
+                    <a href="https://wa.me/905072368337?text=Merhaba,%20Klasik%20Dokuma%20Bej%20canta%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-3 sm:py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
                         WhatsApp'tan Bilgi Al
                     </a>
                 </div>
@@ -85,21 +100,19 @@
 
             <!-- Ürün 2 -->
             <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
-                    <!-- Sağdaki fotoğraflarının dosya adlarının klasördekiyle tamamen aynı olduğuna (Örn: canta2.jpg) dikkat et -->
+                <div class="relative bg-gray-50 aspect-square slider-container overflow-hidden" data-current="0">
                     <img src="hasir1.jpg" alt="Siyah Çanta Ön" class="slide active p-4">
-                    <img src="hasir2.jpg" alt="Siyah Çanta arka" class="slide  p-4">
-                    <img src="hasir3.jpg" alt="Siyah Çanta iç" class="slide  p-4">
+                    <img src="hasir2.jpg" alt="Siyah Çanta Arka" class="slide p-4">
+                    <img src="hasir3.jpg" alt="Siyah Çanta İç" class="slide p-4">
                     
-                    
-                    <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
-                    <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
+                    <button class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
+                    <button class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
                 </div>
-                <div class="p-8 text-center">
+                <div class="p-6 sm:p-8 text-center">
                     <span class="text-xs font-semibold tracking-widest text-brand-accent uppercase mb-2 block">Sınırlı Üretim</span>
-                    <h2 class="font-serif text-2xl mb-3">Gece Siyahı Omuz Çantası</h2>
+                    <h2 class="font-serif text-xl sm:text-2xl mb-3">Gece Siyahı Omuz Çantası</h2>
                     <p class="text-gray-500 font-light text-sm mb-6 leading-relaxed">Özel astarlı iç yapısı ve sağlam kulpları ile hem şık davetlerde hem de ofiste yanınızda.</p>
-                    <a href="https://wa.me/905072368337?text=Merhaba,%20Gece%20Siyahi%20Omuz%20Cantasi%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
+                    <a href="https://wa.me/905072368337?text=Merhaba,%20Gece%20Siyahi%20Omuz%20Cantasi%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-3 sm:py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
                         WhatsApp'tan Bilgi Al
                     </a>
                 </div>
@@ -109,9 +122,9 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-10 mt-10">
+    <footer class="bg-white border-t border-gray-200 py-8 sm:py-10 mt-6 sm:mt-10">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400 text-sm">&copy; 2026 Lumière Tasarım Atölyesi. Tüm tasarımlar el emeğidir.</p>
+            <p class="text-gray-400 text-xs sm:text-sm">&copy; 2026 Lumière Tasarım Atölyesi. Tüm tasarımlar el emeğidir.</p>
         </div>
     </footer>
 
