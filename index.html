@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atölye Koleksiyonu | El Emeği Çantalar</title>
-    <!-- Tailwind CSS CDN (Kurumsal UI Çerçevesi) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Premium Fontlar -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
     <script>
@@ -29,29 +28,40 @@
         }
     </script>
     <style>
+        /* Slider Animasyonu */
         .slide { 
             display: none; 
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            /* Zoom animasyonu için geçiş süresi eklendi */
-            transition: transform 0.5s ease-in-out; 
+            cursor: zoom-in; /* İmleci büyüteç yapar */
         }
-        .slide.active { 
-            display: block; 
-            animation: fadeEffect 0.5s; 
+        .slide.active { display: block; animation: fadeEffect 0.4s; }
+        @keyframes fadeEffect { from {opacity: 0.5;} to {opacity: 1;} }
+
+        /* Zoom Penceresi (Modal) CSS Ayarları */
+        #zoom-modal {
+            backdrop-filter: blur(5px);
         }
-        @keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
-        
-        /* Resmin üzerine gelince %15 yakınlaştır (Zoom Efekti) */
-        .slider-container:hover .slide.active {
-            transform: scale(1.15);
+        .zoom-box {
+            width: 90vw;
+            height: 90vh;
+            max-width: 1000px;
+            max-height: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            cursor: crosshair; /* Detay inceleme imleci */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: background-size 0.2s ease-out; /* Yumuşak yakınlaşma */
         }
     </style>
 </head>
 <body class="bg-brand-light text-brand-dark antialiased">
 
-    <!-- Navbar & Logo Bölümü -->
+    <!-- Navbar -->
     <nav class="bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -59,7 +69,6 @@
                     <svg class="w-6 h-6 sm:w-8 sm:h-8 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider uppercase">Lumière</span>
                 </div>
-                <!-- Mobil gizlenme kaldırıldı, telefonda da görülecek şekilde ayarlandı -->
                 <div class="flex space-x-4 sm:space-x-8">
                     <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-xs sm:text-sm font-medium transition-colors">Koleksiyon</a>
                     <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-xs sm:text-sm font-medium transition-colors">Hakkımızda</a>
@@ -68,10 +77,10 @@
         </div>
     </nav>
 
-    <!-- Karşılama (Hero) Alanı -->
+    <!-- Hero Alanı -->
     <div class="bg-brand-dark text-white py-16 sm:py-20 px-4 sm:px-6 text-center">
         <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 font-semibold">Zamansız Zarafet.</h1>
-        <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl">Her bir ilmeğinde özen barındıran, anne elinden çıkan özel tasarım çantalarla tarzınızı tamamlayın.</p>
+        <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto text-base sm:text-lg md:text-xl">Her bir ilmeğinde özen barındıran, özel tasarım çantalarla tarzınızı tamamlayın.</p>
     </div>
 
     <!-- Ürün Grid Alanı -->
@@ -80,10 +89,10 @@
             
             <!-- Ürün 1 -->
             <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <!-- overflow-hidden eklendi: Zoom yaparken resim kutudan taşmasın diye -->
-                <div class="relative bg-gray-50 aspect-square slider-container overflow-hidden" data-current="0">
-                    <img src="hasir11.jpg" alt="Bej Çanta Ön" class="slide active p-4">
-                    <img src="hasir12.jpg" alt="Bej Çanta Detay" class="slide p-4">
+                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
+                    <!-- onclick="openZoom(this)" eklendi. Tıklanan resmi büyütür -->
+                    <img src="hasir11.jpg" alt="Bej Çanta Ön" class="slide active p-4" onclick="openZoom(this)">
+                    <img src="hasir12.jpg" alt="Bej Çanta Detay" class="slide p-4" onclick="openZoom(this)">
                     
                     <button class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
                     <button class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
@@ -100,10 +109,11 @@
 
             <!-- Ürün 2 -->
             <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div class="relative bg-gray-50 aspect-square slider-container overflow-hidden" data-current="0">
-                    <img src="hasir1.jpg" alt="Siyah Çanta Ön" class="slide active p-4">
-                    <img src="hasir2.jpg" alt="Siyah Çanta Arka" class="slide p-4">
-                    <img src="hasir3.jpg" alt="Siyah Çanta İç" class="slide p-4">
+                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
+                    <!-- onclick="openZoom(this)" eklendi -->
+                    <img src="hasir1.jpg" alt="Siyah Çanta Ön" class="slide active p-4" onclick="openZoom(this)">
+                    <img src="hasir2.jpg" alt="Siyah Çanta Arka" class="slide p-4" onclick="openZoom(this)">
+                    <img src="hasir3.jpg" alt="Siyah Çanta İç" class="slide p-4" onclick="openZoom(this)">
                     
                     <button class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
                     <button class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
@@ -121,6 +131,21 @@
         </div>
     </div>
 
+    <!-- ZOOM MODAL (Tıklayınca açılan tam ekran pencere) -->
+    <div id="zoom-modal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4">
+        <!-- Kapatma Butonu -->
+        <button onclick="closeZoom()" class="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors z-50">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        
+        <!-- İçerisinde resmin büyüyeceği alan -->
+        <div id="zoom-box" class="zoom-box" 
+             onmousemove="handleZoomMove(event)" 
+             onmouseleave="handleZoomLeave()"
+             ontouchmove="handleTouchMove(event)">
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 py-8 sm:py-10 mt-6 sm:mt-10">
         <div class="max-w-7xl mx-auto px-4 text-center">
@@ -128,8 +153,9 @@
         </div>
     </footer>
 
-    <!-- JS: Çoklu Fotoğraf Mantığı -->
+    <!-- JavaScript: Slider ve Gelişmiş Büyüteç Mantığı -->
     <script>
+        // 1. Slider Mantığı
         function moveSlide(btn, n) {
             const container = btn.parentElement;
             const slides = container.querySelectorAll('.slide');
@@ -138,8 +164,65 @@
             slides[current].classList.remove('active');
             current = (current + n + slides.length) % slides.length;
             slides[current].classList.add('active');
-            
             container.setAttribute('data-current', current);
+        }
+
+        // 2. Gelişmiş Zoom (Lightbox + Büyüteç) Mantığı
+        const modal = document.getElementById('zoom-modal');
+        const zoomBox = document.getElementById('zoom-box');
+
+        function openZoom(imgElement) {
+            // Modal'ı göster ve kaydırmayı engelle
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            // Tıklanan resmi modalın arkaplanı yap
+            zoomBox.style.backgroundImage = `url('${imgElement.src}')`;
+            zoomBox.style.backgroundSize = 'contain';
+            zoomBox.style.backgroundPosition = 'center';
+        }
+
+        function closeZoom() {
+            // Modalı gizle ve kaydırmayı geri aç
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Fare kutunun üzerinde gezerken hesaplama yapan fonksiyon
+        function handleZoomMove(e) {
+            // Fare hareket ettikçe resmi büyüt (250% = %150 daha yakın)
+            zoomBox.style.backgroundSize = '250%';
+            
+            const rect = zoomBox.getBoundingClientRect();
+            // Farenin kutu içindeki X ve Y konumu
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Konumu yüzdelik dilime çevir
+            const xPercent = (x / rect.width) * 100;
+            const yPercent = (y / rect.height) * 100;
+            
+            // Arka plan pozisyonunu farenin olduğu yere sabitle
+            zoomBox.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+        }
+
+        // Fare kutudan çıkınca eski haline getir
+        function handleZoomLeave() {
+            zoomBox.style.backgroundSize = 'contain';
+            zoomBox.style.backgroundPosition = 'center';
+        }
+
+        // Telefonda parmakla gezinme desteği
+        function handleTouchMove(e) {
+            e.preventDefault(); // Sayfanın kaymasını engelle
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            handleZoomMove(mouseEvent);
         }
     </script>
 </body>
