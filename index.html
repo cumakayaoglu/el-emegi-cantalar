@@ -3,240 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atölye | El Emeği Tasarım Çantalar</title>
-    <!-- Zarif Fontlar -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Atölye Koleksiyonu | El Emeği Çantalar</title>
+    <!-- Tailwind CSS CDN (Kurumsal UI Çerçevesi) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Premium Fontlar -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1a1a1a',
+                            light: '#f8f7f5',
+                            accent: '#8c7a6b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-color: #2c2c2c;
-            --accent-color: #8c7a6b;
-            --bg-color: #faf9f8;
-            --text-light: #666;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            color: var(--primary-color);
-        }
-
-        /* Minimalist Üst Bilgi */
-        header {
-            text-align: center;
-            padding: 5rem 2rem 3rem;
-            background-color: #fff;
-            border-bottom: 1px solid #eaeaea;
-        }
-
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 600;
-            margin: 0 0 1rem 0;
-            letter-spacing: 2px;
-            color: var(--primary-color);
-        }
-
-        header p {
-            font-weight: 300;
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Galeri Grid Yapısı */
-        .container {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-
-        /* Ürün Kartı */
-        .product-card {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: 2px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: box-shadow 0.4s ease;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-        }
-
-        /* Fotoğraf Slider Alanı */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            background-color: #f5f5f5;
-            border-radius: 2px;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            object-fit: cover;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        /* Slider Butonları */
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            color: var(--primary-color);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-            z-index: 2;
-        }
-
-        .slider-btn:hover {
-            background: #fff;
-        }
-
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
-
-        /* Ürün Detayları */
-        .product-info {
-            padding: 1.5rem 0 0.5rem;
-            text-align: center;
-        }
-
-        .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            margin: 0 0 0.5rem;
-        }
-
-        .product-desc {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-        }
-
-        /* Satın Alma Butonu */
-        .action-btn {
-            display: inline-block;
-            width: 100%;
-            background-color: var(--primary-color);
-            color: #fff;
-            text-decoration: none;
-            padding: 1rem 0;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: background-color 0.3s;
-            border-radius: 2px;
-        }
-
-        .action-btn:hover {
-            background-color: var(--accent-color);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem;
-            background-color: #fff;
-            color: var(--text-light);
-            border-top: 1px solid #eaeaea;
-            font-size: 0.9rem;
-        }
+        .slide { display: none; width: 100%; height: 100%; object-fit: contain; }
+        .slide.active { display: block; animation: fadeEffect 0.5s; }
+        @keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
     </style>
 </head>
-<body>
+<body class="bg-brand-light text-brand-dark antialiased">
 
-    <header>
-        <h1>Atölye Koleksiyonu</h1>
-        <p>Her bir ilmeğinde sevgi ve özen barındıran, annemin ellerinden çıkma zamansız tasarım çantalar.</p>
-    </header>
-
-    <div class="container">
-        
-        <!-- 1. ÜRÜN BAŞLANGICI -->
-        <div class="product-card">
-            <div class="slider-container" data-current-slide="0">
-                <!-- Buraya istediğin kadar fotoğraf ekleyebilirsin. Sadece img etiketini çoğalt. İlk fotoğrafa class="slide active" ver, diğerlerine class="slide" ver. -->
-                <img src="img/canta1-on.jpg" alt="Bej Çanta Ön" class="slide active">
-                <img src="img/canta1-arka.jpg" alt="Bej Çanta Arka" class="slide">
-                <img src="img/canta1-detay.jpg" alt="Bej Çanta Detay" class="slide">
-                
-                <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">&#10094;</button>
-                <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">&#10095;</button>
-            </div>
-            <div class="product-info">
-                <h2 class="product-title">Klasik Dokuma Bej</h2>
-                <p class="product-desc">%100 organik pamuk ipten elde üretilmiştir. Günlük stilinizi tamamlayacak zarif ve dayanıklı bir parça.</p>
-                <a href="https://wa.me/905320000000?text=Merhaba,%20Klasik%20Dokuma%20Bej%20canta%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" class="action-btn">WhatsApp'tan Bilgi Al</a>
+    <!-- Navbar & Logo Bölümü -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <!-- Gerçek bir logo eklendiğinde buradaki SVG değiştirilebilir -->
+                    <svg class="w-8 h-8 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span class="font-serif text-2xl font-bold tracking-wider uppercase">Lumière</span>
+                </div>
+                <div class="hidden sm:flex sm:space-x-8">
+                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">Koleksiyon</a>
+                    <a href="#" class="border-transparent text-gray-500 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">Hakkımızda</a>
+                </div>
             </div>
         </div>
-        <!-- 1. ÜRÜN BİTİŞİ -->
+    </nav>
 
-        <!-- 2. ÜRÜN BAŞLANGICI -->
-        <div class="product-card">
-            <div class="slider-container" data-current-slide="0">
-                <img src="img/canta2-on.jpg" alt="Siyah Çanta Ön" class="slide active">
-                <img src="img/canta2-ic.jpg" alt="Siyah Çanta İç" class="slide">
-                
-                <button class="slider-btn prev-btn" onclick="changeSlide(this, -1)">&#10094;</button>
-                <button class="slider-btn next-btn" onclick="changeSlide(this, 1)">&#10095;</button>
-            </div>
-            <div class="product-info">
-                <h2 class="product-title">Gece Siyahı Omuz Çantası</h2>
-                <p class="product-desc">Özel astarlı iç yapısı ve sağlam kulpları ile hem şık davetlerde hem de ofiste yanınızda.</p>
-                <a href="https://wa.me/905320000000?text=Merhaba,%20Gece%20Siyahi%20Omuz%20Cantasi%20hakkinda%20bilgi%20almak%20istiyorum." target="_blank" class="action-btn">WhatsApp'tan Bilgi Al</a>
-            </div>
-        </div>
-        <!-- 2. ÜRÜN BİTİŞİ -->
-
+    <!-- Karşılama (Hero) Alanı -->
+    <div class="bg-brand-dark text-white py-20 px-6 text-center">
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 font-semibold">Zamansız Zarafet.</h1>
+        <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto text-lg md:text-xl">Her bir ilmeğinde özen barındıran, anne elinden çıkan özel tasarım çantalarla tarzınızı tamamlayın.</p>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Atölye | Tüm tasarımlar el emeğidir.</p>
+    <!-- Ürün Grid Alanı -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Ürün 1 -->
+            <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
+                    <!-- object-contain ile fotoğraflar artık kırpılmayacak, kutuya tam sığacak -->
+                    <img src="C:\Users\cumak\OneDrive\Masaüstü\cantalarim\hasir11.jpg" alt="Siyah Çanta Ön" class="slide active p-4">
+                    <img src="C:\Users\cumak\OneDrive\Masaüstü\cantalarim\hasir12.jpg" alt="Siyah Çanta Ön" class="slide  p-4">
+                    
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
+                </div>
+                <div class="p-8 text-center">
+                    <span class="text-xs font-semibold tracking-widest text-brand-accent uppercase mb-2 block">Yeni Sezon</span>
+                    <h2 class="font-serif text-2xl mb-3">Klasik Dokuma Bej</h2>
+                    <p class="text-gray-500 font-light text-sm mb-6 leading-relaxed">%100 organik pamuk ipten elde üretilmiştir. Günlük stilinizi tamamlayacak zarif ve dayanıklı bir parça.</p>
+                    <a href="https://wa.me/905072368337?text=Merhaba,%20Klasik%20Dokuma%20Bej%20canta%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
+                        WhatsApp'tan Bilgi Al
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ürün 2 -->
+            <div class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                <div class="relative bg-gray-50 aspect-square slider-container" data-current="0">
+                    <!-- Sağdaki fotoğraflarının dosya adlarının klasördekiyle tamamen aynı olduğuna (Örn: canta2.jpg) dikkat et -->
+                    <img src="C:\Users\cumak\OneDrive\Masaüstü\cantalarim\hasir1.jpg" alt="Siyah Çanta Ön" class="slide active p-4">
+                    <img src="C:\Users\cumak\OneDrive\Masaüstü\cantalarim\hasir2.jpg" alt="Siyah Çanta arka" class="slide  p-4">
+                    <img src="C:\Users\cumak\OneDrive\Masaüstü\cantalarim\hasir3.jpg" alt="Siyah Çanta iç" class="slide  p-4">
+                    
+                    
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, -1)">&#10094;</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow transition-all z-10" onclick="moveSlide(this, 1)">&#10095;</button>
+                </div>
+                <div class="p-8 text-center">
+                    <span class="text-xs font-semibold tracking-widest text-brand-accent uppercase mb-2 block">Sınırlı Üretim</span>
+                    <h2 class="font-serif text-2xl mb-3">Gece Siyahı Omuz Çantası</h2>
+                    <p class="text-gray-500 font-light text-sm mb-6 leading-relaxed">Özel astarlı iç yapısı ve sağlam kulpları ile hem şık davetlerde hem de ofiste yanınızda.</p>
+                    <a href="https://wa.me/905072368337?text=Merhaba,%20Gece%20Siyahi%20Omuz%20Cantasi%20icin%20yaziyorum." target="_blank" class="inline-block w-full bg-brand-dark text-white font-medium text-sm py-4 px-6 uppercase tracking-wider hover:bg-brand-accent transition-colors">
+                        WhatsApp'tan Bilgi Al
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-10 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">&copy; 2026 Lumière Tasarım Atölyesi. Tüm tasarımlar el emeğidir.</p>
+        </div>
     </footer>
 
-    <!-- Fotoğraf Geçiş (Slider) Mantığı -->
+    <!-- JS: Çoklu Fotoğraf Mantığı -->
     <script>
-        function changeSlide(button, direction) {
-            const container = button.parentElement;
+        function moveSlide(btn, n) {
+            const container = btn.parentElement;
             const slides = container.querySelectorAll('.slide');
-            let currentIndex = parseInt(container.getAttribute('data-current-slide'));
+            let current = parseInt(container.getAttribute('data-current'));
             
-            slides[currentIndex].classList.remove('active');
+            slides[current].classList.remove('active');
+            current = (current + n + slides.length) % slides.length;
+            slides[current].classList.add('active');
             
-            currentIndex = (currentIndex + direction + slides.length) % slides.length;
-            
-            slides[currentIndex].classList.add('active');
-            container.setAttribute('data-current-slide', currentIndex);
+            container.setAttribute('data-current', current);
         }
     </script>
 </body>
